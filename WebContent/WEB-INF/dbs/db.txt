@@ -1,0 +1,28 @@
+{
+	"users": [
+		{
+			"id": 1,
+			"username": "admin",
+			"password": "123456",
+			"name": "administrator",
+			"mobile": "123456",
+			"role": "admin"
+		},
+		{
+			"id": 2,
+			"username": "coordinator",
+			"password": "123456",
+			"name": "coordinator",
+			"mobile": "123456",
+			"role": "coordinator"
+		},
+		{
+			"id": 3,
+			"username": "candidate",
+			"password": "123456",
+			"name": "candidate",
+			"mobile": "123456",
+			"role": "candidate"
+		}
+	]
+}

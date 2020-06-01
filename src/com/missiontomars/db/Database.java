@@ -1,4 +1,4 @@
-ackage com.missiontomars.db;
+package com.missiontomars.db;
 
 import java.util.ArrayList;
 import java.util.List;
