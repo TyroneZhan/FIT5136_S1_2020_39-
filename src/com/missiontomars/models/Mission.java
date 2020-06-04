@@ -1,20 +1,32 @@
 package com.missiontomars.models;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Mission {
 	private int id = 0;
-	private String name;
-	private String description;
-	private String countryOfOrigin;
-	private String countriesAllowed;
-	private int coordinatorId;
-	private String cargoRequirements;
-	private Date launchDate;
-	private String destinationAddress;
-	private int durationOfMission;
-	private String status;
-	
+	private String name = "";
+	private int shuttleId = 0;
+	private String description = "";
+	private String countryOfOrigin = "";
+	private String countriesAllowed = "";
+	private int coordinatorId = 0;
+	private String cargoRequirements = "";
+	private Date launchDate = new Date();
+	private String destinationAddress = "";
+	private int durationOfMission = 10;
+	private String status = "planning_phase";
+
+	public int getShuttleId() {
+		return shuttleId;
+	}
+	public void setShuttleId(int shuttleId) {
+		this.shuttleId = shuttleId;
+	}
 	public int getId() {
 		return id;
 	}
@@ -59,6 +71,13 @@ public class Mission {
 	}
 	public Date getLaunchDate() {
 		return launchDate;
+	}
+	public String getLaunchDateStr() {
+		if(this.launchDate == null) {
+			return "-";
+		}
+		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		return dateFormat.format(this.launchDate);
 	}
 	public void setLaunchDate(Date launchDate) {
 		this.launchDate = launchDate;

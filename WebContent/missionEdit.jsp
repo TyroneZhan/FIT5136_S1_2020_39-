@@ -1,15 +1,28 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	import="java.util.List, com.missiontomars.models.*, com.missiontomars.db.*"
+	import="java.util.List,java.util.ArrayList, com.missiontomars.models.*, com.missiontomars.db.*"
     pageEncoding="UTF-8"%>
 <% 
 	if (session.getAttribute("loginUser") == null) {
 		response.sendRedirect("login.jsp");
+		return;
 	}
+	User user = (User)session.getAttribute("loginUser");
 	List<Mission> missionList = DbOperator.getDatabase().getMissions();
-	Integer missionId = Integer.parseInt(request.getParameter("missionId"));
+	String missionId = request.getParameter("missionId");
 	Mission mission = new Mission();
+	List<MissionJob> missionJobs = new ArrayList<MissionJob>();
+	Shuttle shuttle = null;
+	List<Shuttle> shuttles = DbOperator.getDatabase().getShuttles();
 	if (missionId != null) {
-		mission = DbOperator.getDatabase().findMissionByPk(missionId);
+		mission = DbOperator.getDatabase().findMissionByPk(Integer.parseInt(missionId));
+		missionJobs = DbOperator.getDatabase().getMissionJobsByMissionId(Integer.parseInt(missionId));
+		if(mission.getShuttleId() > 0){
+			for(Shuttle sh : shuttles) {
+				if(sh.getId() == mission.getShuttleId()){
+					shuttle = sh;
+				}
+			}
+		}
 	}
 %>
 <!DOCTYPE html>
@@ -90,17 +103,17 @@
 	            <div class="form-group">
 				    <label class="col-sm-2 control-label">Cargo Requirements</label>
 				    <div class="col-sm-10">
-				    	<select class="form-control" name="cargoRequirements" value="<%= mission.getCargoRequirements() %>">
-				    		<option value="for_the_journey">For the journey</option>
-				    		<option value="for_the_mission">For the mission</option>
-				    		<option value="for_other_mission">For other mission</option>
+				    	<select class="form-control" name="cargoRequirements">
+				    		<option value="for_the_journey" <%= mission.getCargoRequirements().equals("for_the_journey") ? "selected" : "" %>>For the journey</option>
+				    		<option value="for_the_mission" <%= mission.getCargoRequirements().equals("for_the_mission") ? "selected" : "" %>>For the mission</option>
+				    		<option value="for_other_mission" <%= mission.getCargoRequirements().equals("for_other_mission") ? "selected" : "" %>>For other mission</option>
 				    	</select>
 				    </div>
 				</div>
 	            <div class="form-group">
 				    <label class="col-sm-2 control-label">Launch Date</label>
 				    <div class="col-sm-10">
-				    	<input type="text" id="launchDate" class="form-control" name="launchDate" value="<%= mission.getLaunchDate() %>" placeholder="launch date">
+				    	<input type="text" id="launchDate" class="form-control" name="launchDate" value="<%= mission.getLaunchDateStr() %>" placeholder="launch date">
 				    </div>
 				</div>
 	            <div class="form-group">
@@ -118,24 +131,99 @@
 				    	</div>
 				    </div>
 				</div>
+				<% if(mission.getId() != 0) { %>
 	            <div class="form-group">
 				    <label class="col-sm-2 control-label">Status Of the Mission</label>
 				    <div class="col-sm-10">
-				    	<select class="form-control" name="status" value="<%= mission.getStatus() %>">
-				    		<option value="planning_phase">planning phase</option>
-				    		<option value="departed_earth">departed earth</option>
-				    		<option value="landed_on_mars">landed on mars</option>
-				    		<option value="mission_in_progress">mission in progress</option>
-				    		<option value="returned_to_earth">returned to earth</option>
-				    		<option value="mission_completed">mission completed</option>
+				    	<select class="form-control" name="status">
+				    		<option value="planning_phase" <%= mission.getStatus().equals("planning_phase") ? "selected" : "" %>>planning phase</option>
+				    		<option value="departed_earth" <%= mission.getStatus().equals("departed_earth") ? "selected" : "" %>>departed earth</option>
+				    		<option value="landed_on_mars" <%= mission.getStatus().equals("landed_on_mars") ? "selected" : "" %>>landed on mars</option>
+				    		<option value="mission_in_progress" <%= mission.getStatus().equals("mission_in_progress") ? "selected" : "" %>>mission in progress</option>
+				    		<option value="returned_to_earth" <%= mission.getStatus().equals("returned_to_earth") ? "selected" : "" %>>returned to earth</option>
+				    		<option value="mission_completed" <%= mission.getStatus().equals("mission_completed") ? "selected" : "" %>>mission completed</option>
 				    	</select>
 				    </div>
 				</div>
+				<% if(user.getRole().equals("admin")){ %>
+	            <div class="form-group">
+				    <label class="col-sm-2 control-label">Select Shuttle</label>
+				    <div class="col-sm-10">
+				    	<select class="form-control" name="shuttle">
+				    		<option value="0">Select Shuttle</option>
+				    	<% for(Shuttle sh : shuttles){ %>
+				    		<option value="<%= sh.getId() %>" <%= mission.getShuttleId() == sh.getId() ? "selected" : "" %>><%= sh.getName() %></option>
+				    	<% } %>
+				    	</select>
+				    </div>
+				</div>
+				<% } %>
+				<% } %>
 	            <div class="form-group">
 				    <div class="col-sm-12 text-center">
 				    	<button type="submit" class="btn btn-primary">Submit</button>
 				    </div>
 				</div>
+				<% if(mission.getId() != 0) { %>
+				<div>
+					<h3>Jobs</h3>
+					<table class="table table-striped">
+						<tr>
+							<th>Name</th>
+							<th>Required Number</th>
+							<th>Description</th>
+							<th></th>
+						</tr>
+						<tr>
+						<% for(MissionJob job : missionJobs) { %>
+							<td><%= job.getName() %></td>
+							<td><%= job.getRequiredNumber() %></td>
+							<td><%= job.getDescription() %></td>
+							<td></td>
+						<% } %>
+						</tr>
+						<tr>
+							<td>
+								<input id="job-name" placeholder="Job name" />
+							</td>
+							<td>
+								<input id="job-number" type="number" placeholder="Job Required number" />
+							</td>
+							<td>
+								<input id="job-description" placeholder="Job description" />
+							</td>
+							<td>
+								<input type="button" id="add-job" value="Add Job" />
+							</td>
+						</tr>
+					</table>
+				</div>
+				<% } %>
+				<% if(mission.getShuttleId() != 0) { %>
+				<div>
+					<h3>Selected Shuttled</h3>
+					<table class="table table-striped">
+						<tr>
+							<th>Name</th>
+							<th>Manufacture Year</th>
+							<th>Fuel Capability (kg)</th>
+							<th>Passenger capacity</th>
+							<th>Cargo capacity (m^3)</th>
+							<th>Travel speed (km/s)</th>
+							<th>Origin</th>
+						</tr>
+						<tr>
+							<td><%= shuttle.getName() %></td>
+							<td><%= shuttle.getManufactureYear() %></td>
+							<td><%= shuttle.getFuelCapacity() %></td>
+							<td><%= shuttle.getPassengerCapacity() %></td>
+							<td><%= shuttle.getCargoCapacity() %></td>
+							<td><%= shuttle.getSpeed() %></td>
+							<td><%= shuttle.getOrigin() %></td>
+						</tr>
+					</table>
+				</div>
+				<% } %>
             </form>
         </div>
       </div>
@@ -147,6 +235,29 @@
     	$(function(){
     		$("#launchDate").datepicker({
     			format: "yyyy-mm-dd"
+    		});
+    		$("#add-job").click(function(){
+    			if(!$("#job-name").val() || !$("#job-number").val() || !$("#job-description").val()) {
+    				alert("fill the form before submit please.");
+    				return;
+    			}
+    			$.ajax({
+    				url: "AddMissionJob",
+    				method: "POST",
+    				data: {
+    					missionId: <%= missionId %>,
+    					name: $("#job-name").val(),
+    					requiredNumber: $("#job-number").val(),
+    					description: $("#job-description").val(),
+    				},
+    				success: function(){
+    					alert("added");
+    					window.location.reload();
+    				},
+    				error: function(){
+    					alert("server error.")
+    				}
+    			});
     		});
     	});
     </script>

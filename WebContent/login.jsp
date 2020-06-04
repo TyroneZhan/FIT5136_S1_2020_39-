@@ -25,6 +25,9 @@
 	                <div class="form-group text-center">
 	                    <button type="submit" class="btn btn-primary">Login</button>
 	                </div>
+	                <div class="form-group text-center">
+	                    <a href="registerCandidate.jsp">Register Candidate</a>
+	                </div>
 	            </form>
 	        </div>
 	    </div>

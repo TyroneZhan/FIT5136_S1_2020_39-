@@ -4,8 +4,9 @@
 <% 
 	if (session.getAttribute("loginUser") == null) {
 		response.sendRedirect("login.jsp");
+		return;
 	}
-	List<User> userList = DbOperator.getDatabase().getUsers();
+	List<Candidate> candidateList = DbOperator.getDatabase().getCandidates();
 %>
 <!DOCTYPE html>
 <html>
@@ -47,9 +48,9 @@
       <div class="row">
         <div class="col-sm-3 col-md-1 sidebar">
           <ul class="nav nav-sidebar">
-            <li class="active"><a href="#">Users</a></li>
+            <li class="active"><a href="index.jsp">Users</a></li>
             <li><a href="missions.jsp">Missions</a></li>
-            <li><a href="candidates.jsp">Candidates</a></li>
+            <li><a href="#">Candidates</a></li>
             <li><a href="logoutController">Logout</a></li>
           </ul>
         </div>
@@ -59,20 +60,38 @@
         		<thead>
         			<tr>
         				<th>#</th>
-        				<th>username</th>
-        				<th>name</th>
-        				<th>mobile</th>
-        				<th>role</th>
+        				<th>Name</th>
+        				<th>Date of Birth</th>
+        				<th>Address</th>
+        				<th>Nationality</th>
+        				<th>Identification number</th>
+        				<th>Gender</th>
+        				<th>Allergies</th>
+        				<th>Food Preferences</th>
+        				<th>Qualification</th>
+        				<th>Work Experience</th>
+        				<th>Occupations</th>
+        				<th>Computer Skills</th>
+        				<th>Languages spoken</th>
         			</tr>
         		</thead>
         		<tbody>
-        		<% for(User user : userList){ %>
+        		<% for(Candidate candidate : candidateList){ %>
         			<tr>
-        				<td><%= user.getId() %></td>
-        				<td><%= user.getUsername() %></td>
-        				<td><%= user.getName() %></td>
-        				<td><%= user.getMobile() %></td>
-        				<td><%= user.getRole() %></td>
+        				<td><%= candidate.getId() %></td>
+        				<td><%= candidate.getName() %></td>
+        				<td><%= candidate.getBirthday() %></td>
+        				<td><%= candidate.getAddress() %></td>
+        				<td><%= candidate.getNationality() %></td>
+        				<td><%= candidate.getIdNumber() %></td>
+        				<td><%= candidate.getGender() %></td>
+        				<td><%= candidate.getAllergies() %></td>
+        				<td><%= candidate.getFood() %></td>
+        				<td><%= candidate.getQualification() %></td>
+        				<td><%= candidate.getWork() %></td>
+        				<td><%= candidate.getOccupations() %></td>
+        				<td><%= candidate.getComputer() %></td>
+        				<td><%= candidate.getLanguages() %></td>
         			</tr>
         		<% } %>
         		</tbody>

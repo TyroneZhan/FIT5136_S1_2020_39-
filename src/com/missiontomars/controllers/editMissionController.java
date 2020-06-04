@@ -44,7 +44,6 @@ public class editMissionController extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 
-		System.out.println(request.getParameter("id"));
 		Integer id = Integer.parseInt(request.getParameter("id") != null ? request.getParameter("id") : "0");
 		String name = request.getParameter("name");
 		String description = request.getParameter("description");
@@ -55,6 +54,13 @@ public class editMissionController extends HttpServlet {
 		String destinationAddress = request.getParameter("destinationAddress");
 		String durationOfMission = request.getParameter("durationOfMission");
 		String status = request.getParameter("status");
+		if(status == null) {
+			status = "planning_phase";
+		}
+		String shuttle = request.getParameter("shuttle");
+		if(shuttle == null) {
+			shuttle = "0";
+		}
 		
 		DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		
@@ -77,6 +83,7 @@ public class editMissionController extends HttpServlet {
 		targetMission.setCountriesAllowed(countriesAllowed);
 		targetMission.setCoordinatorId(loginUser.getId());
 		targetMission.setCargoRequirements(cargoRequirements);
+		targetMission.setShuttleId(Integer.parseInt(shuttle));
 		try {
 			targetMission.setLaunchDate(dateFormat.parse(launchDateString));
 		} catch (ParseException e) {
@@ -86,7 +93,7 @@ public class editMissionController extends HttpServlet {
 		targetMission.setDurationOfMission(Integer.parseInt(durationOfMission));
 		targetMission.setStatus(status);
 		DbOperator.flush();
-		response.sendRedirect("missions.jsp");
+		response.sendRedirect("missionEdit.jsp?missionId=" + targetMission.getId());
 	}
 
 }

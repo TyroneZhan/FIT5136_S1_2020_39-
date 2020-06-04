@@ -5,6 +5,7 @@
 	if (session.getAttribute("loginUser") == null) {
 		response.sendRedirect("login.jsp");
 	}
+	User user = (User)session.getAttribute("loginUser");
 	List<Mission> missionList = DbOperator.getDatabase().getMissions();
 %>
 <!DOCTYPE html>
@@ -49,14 +50,16 @@
           <ul class="nav nav-sidebar">
             <li><a href="index.jsp">Users</a></li>
             <li class="active"><a href="#">Missions</a></li>
-            <li><a href="#">Candidates</a></li>
+            <li><a href="candidates.jsp">Candidates</a></li>
             <li><a href="logoutController">Logout</a></li>
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-11 col-md-offset-1 main">
         	<h1>
         		Mission List
+        		<% if(user.getRole() == "coordinator") { %>
         		<a class="btn btn-primary pull-right" href="missionEdit.jsp">New Mission</a>
+        		<% } %>
         	</h1>
         	<table class="table table-bordered">
         		<thead>
@@ -76,7 +79,7 @@
         				<td><%= mission.getId() %></td>
         				<td><%= mission.getName() %></td>
         				<td><%= mission.getStatus() %></td>
-        				<td><%= mission.getLaunchDate() %></td>
+        				<td><%= mission.getLaunchDateStr() %></td>
         				<td><%= mission.getDurationOfMission() %></td>
         				<td>
         					<a href="missionEdit.jsp?missionId=<%= mission.getId() %>">Edit</a>
