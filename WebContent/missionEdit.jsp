@@ -244,7 +244,7 @@
     			format: "yyyy-mm-dd"
     		});
     		$("#add-job").click(function(){
-    			if(!$("#job-name").val() || !$("#job-number").val() || !$("#job-description").val()) {
+    			if(!$("#job-name").val() || !$("#job-description").val()) {
     				alert("fill the form before submit please.");
     				return;
     			}

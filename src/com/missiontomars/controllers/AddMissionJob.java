@@ -38,13 +38,11 @@ public class AddMissionJob extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String name = request.getParameter("name");
 		String description = request.getParameter("description");
-		String requiredNumber = request.getParameter("requiredNumber");
 		String missionId = request.getParameter("missionId");
 		MissionJob job = new MissionJob();
 		job.setMissionId(Integer.parseInt(missionId));
 		job.setName(name);
 		job.setDescription(description);
-		job.setRequiredNumber(Integer.parseInt(requiredNumber));
 		int maxId = 0;
 		for(MissionJob j : this.db.getMissionJobs()) {
 			if (j.getId() > maxId) {
