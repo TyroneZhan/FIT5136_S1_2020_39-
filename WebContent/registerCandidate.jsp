@@ -41,7 +41,7 @@
 		            <div class="form-group">
 					    <label class="col-sm-2 control-label">Identification Number</label>
 					    <div class="col-sm-10">
-					    	<input type="text" class="form-control" name="idNumber">
+					    	<input type="text" class="form-control" name="idNumber" id="idNumber">
 					    </div>
 					</div>
 		            <div class="form-group">
@@ -95,6 +95,18 @@
 					    	<input type="text" class="form-control" name="languages">
 					    </div>
 					</div>
+		            <div class="form-group">
+					    <label class="col-sm-2 control-label">Criminal records</label>
+					    <div class="col-sm-10">
+					    	<input type="text" readonly class="form-control" name="criminal" id="criminal">
+					    </div>
+					</div>
+		            <div class="form-group">
+					    <label class="col-sm-2 control-label">Health records</label>
+					    <div class="col-sm-10">
+					    	<input type="text" readonly class="form-control" name="health" id="health">
+					    </div>
+					</div>
 	                <div class="form-group text-center">
 	                    <button type="submit" class="btn btn-primary">Submit</button>
 	                </div>
@@ -104,5 +116,18 @@
 	</div>
 	<script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+	<script type="text/javascript">
+		$(function(){
+			$("#idNumber").change(function(){
+				if($("#idNumber").val().endsWith("0")){
+					$("#criminal").val("criminal");
+					$("#health").val("unhealth");
+				} else {
+					$("#criminal").val("none");
+					$("#health").val("health");
+				}
+			})
+		});
+	</script>
 </body>
 </html>

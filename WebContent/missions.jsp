@@ -4,6 +4,7 @@
 <% 
 	if (session.getAttribute("loginUser") == null) {
 		response.sendRedirect("login.jsp");
+		return;
 	}
 	User user = (User)session.getAttribute("loginUser");
 	List<Mission> missionList = DbOperator.getDatabase().getMissions();

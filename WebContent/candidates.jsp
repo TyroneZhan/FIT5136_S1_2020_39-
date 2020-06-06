@@ -48,14 +48,14 @@
       <div class="row">
         <div class="col-sm-3 col-md-1 sidebar">
           <ul class="nav nav-sidebar">
-            <li class="active"><a href="index.jsp">Users</a></li>
+            <li><a href="index.jsp">Users</a></li>
             <li><a href="missions.jsp">Missions</a></li>
-            <li><a href="#">Candidates</a></li>
+            <li class="active"><a href="#">Candidates</a></li>
             <li><a href="logoutController">Logout</a></li>
           </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-11 col-md-offset-1 main">
-        	<h1>User List</h1>
+        	<h1>Candidate List</h1>
         	<table class="table table-bordered">
         		<thead>
         			<tr>

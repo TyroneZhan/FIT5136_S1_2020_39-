@@ -67,8 +67,8 @@
         <div class="col-sm-3 col-md-1 sidebar">
           <ul class="nav nav-sidebar">
             <li><a href="index.jsp">Users</a></li>
-            <li class="active"><a href="#">Missions</a></li>
-            <li><a href="#">Candidates</a></li>
+            <li class="active"><a href="missions.jsp">Missions</a></li>
+            <li><a href="candidates.jsp">Candidates</a></li>
             <li><a href="logoutController">Logout</a></li>
           </ul>
         </div>
@@ -108,6 +108,18 @@
 				    		<option value="for_the_mission" <%= mission.getCargoRequirements().equals("for_the_mission") ? "selected" : "" %>>For the mission</option>
 				    		<option value="for_other_mission" <%= mission.getCargoRequirements().equals("for_other_mission") ? "selected" : "" %>>For other mission</option>
 				    	</select>
+				    </div>
+				</div>
+	            <div class="form-group">
+				    <label class="col-sm-2 control-label">Cargo Name</label>
+				    <div class="col-sm-10">
+				    	<input type="text" id="cargoName" class="form-control" name="cargoName" value="<%= mission.getCargoName() %>" placeholder="cargo name">
+				    </div>
+				</div>
+	            <div class="form-group">
+				    <label class="col-sm-2 control-label">Cargo Number</label>
+				    <div class="col-sm-10">
+				    	<input type="number" id="cargoNumber" class="form-control" name="cargoNumber" value="<%= mission.getCargoNumber() %>" placeholder="cargo number">
 				    </div>
 				</div>
 	            <div class="form-group">
@@ -170,24 +182,19 @@
 					<table class="table table-striped">
 						<tr>
 							<th>Name</th>
-							<th>Required Number</th>
 							<th>Description</th>
 							<th></th>
 						</tr>
 						<tr>
 						<% for(MissionJob job : missionJobs) { %>
 							<td><%= job.getName() %></td>
-							<td><%= job.getRequiredNumber() %></td>
 							<td><%= job.getDescription() %></td>
-							<td></td>
+							<td><a href="editCriteria.jsp?jobId=<%= job.getId() %>&missionId=<%= missionId %>">Edit criteria</a></td>
 						<% } %>
 						</tr>
 						<tr>
 							<td>
 								<input id="job-name" placeholder="Job name" />
-							</td>
-							<td>
-								<input id="job-number" type="number" placeholder="Job Required number" />
 							</td>
 							<td>
 								<input id="job-description" placeholder="Job description" />

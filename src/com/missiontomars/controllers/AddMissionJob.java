@@ -53,6 +53,7 @@ public class AddMissionJob extends HttpServlet {
 		}
 		job.setId(maxId + 1);
 		this.db.getMissionJobs().add(job);
+		DbOperator.flush();
 	}
 
 }

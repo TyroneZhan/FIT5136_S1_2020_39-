@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.missiontomars.models.Candidate;
+import com.missiontomars.models.Criteria;
 import com.missiontomars.models.Mission;
 import com.missiontomars.models.MissionJob;
 import com.missiontomars.models.Shuttle;
@@ -14,6 +15,17 @@ public class Database {
 	private List<Mission> missions = new ArrayList<Mission>();
 	private List<MissionJob> missionJobs = new ArrayList<MissionJob>();
 	private List<Shuttle> shuttles = new ArrayList<Shuttle>();
+	private List<Criteria> criterias = new ArrayList<Criteria>();
+	
+	
+	public List<Criteria> getCriterias() {
+		return criterias;
+	}
+
+	public void setCriterias(List<Criteria> criterias) {
+		this.criterias = criterias;
+	}
+
 	public List<Candidate> getCandidates() {
 		return candidates;
 	}

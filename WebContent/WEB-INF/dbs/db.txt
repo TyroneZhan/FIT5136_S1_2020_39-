@@ -15,14 +15,6 @@
 			"name": "coordinator",
 			"mobile": "123456",
 			"role": "coordinator"
-		},
-		{
-			"id": 3,
-			"username": "candidate",
-			"password": "123456",
-			"name": "candidate",
-			"mobile": "123456",
-			"role": "candidate"
 		}
 	]
 }

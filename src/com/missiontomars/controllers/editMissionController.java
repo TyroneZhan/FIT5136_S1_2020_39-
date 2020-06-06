@@ -53,6 +53,8 @@ public class editMissionController extends HttpServlet {
 		String launchDateString = request.getParameter("launchDate");
 		String destinationAddress = request.getParameter("destinationAddress");
 		String durationOfMission = request.getParameter("durationOfMission");
+		String cargoName = request.getParameter("cargoName");
+		String cargoNumber = request.getParameter("cargoNumber");
 		String status = request.getParameter("status");
 		if(status == null) {
 			status = "planning_phase";
@@ -84,6 +86,8 @@ public class editMissionController extends HttpServlet {
 		targetMission.setCoordinatorId(loginUser.getId());
 		targetMission.setCargoRequirements(cargoRequirements);
 		targetMission.setShuttleId(Integer.parseInt(shuttle));
+		targetMission.setCargoName(cargoName);
+		targetMission.setCargoNumber(cargoNumber);
 		try {
 			targetMission.setLaunchDate(dateFormat.parse(launchDateString));
 		} catch (ParseException e) {

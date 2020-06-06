@@ -15,7 +15,21 @@ public class Candidate {
 	private String occupations;
 	private String computer;
 	private String languages;
+	private String criminal;
+	private String health;
 	
+	public String getCriminal() {
+		return criminal;
+	}
+	public void setCriminal(String criminal) {
+		this.criminal = criminal;
+	}
+	public String getHealth() {
+		return health;
+	}
+	public void setHealth(String health) {
+		this.health = health;
+	}
 	public int getId() {
 		return id;
 	}

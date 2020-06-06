@@ -49,6 +49,8 @@ public class registerController extends HttpServlet {
 		String occupations = request.getParameter("occupations");
 		String computer = request.getParameter("computer");
 		String languages = request.getParameter("languages");
+		String criminal = request.getParameter("criminal");
+		String health = request.getParameter("health");
 		int maxId = 0;
 		for(Candidate can : this.db.getCandidates()) {
 			if(can.getId() > maxId) {
@@ -70,7 +72,10 @@ public class registerController extends HttpServlet {
 		candidate.setOccupations(occupations);
 		candidate.setComputer(computer);
 		candidate.setLanguages(languages);
+		candidate.setCriminal(criminal);
+		candidate.setHealth(health);
 		this.db.getCandidates().add(candidate);
+		DbOperator.flush();
 		response.getWriter().append("Register successfully.");
 	}
 

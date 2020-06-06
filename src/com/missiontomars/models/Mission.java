@@ -16,6 +16,8 @@ public class Mission {
 	private String countriesAllowed = "";
 	private int coordinatorId = 0;
 	private String cargoRequirements = "";
+	private String cargoName = "";
+	private String cargoNumber = "";
 	private Date launchDate = new Date();
 	private String destinationAddress = "";
 	private int durationOfMission = 10;
@@ -99,5 +101,18 @@ public class Mission {
 	}
 	public void setStatus(String status) {
 		this.status = status;
+	}
+
+	public String getCargoName() {
+		return cargoName;
+	}
+	public void setCargoName(String cargoName) {
+		this.cargoName = cargoName;
+	}
+	public String getCargoNumber() {
+		return cargoNumber;
+	}
+	public void setCargoNumber(String cargoNumber) {
+		this.cargoNumber = cargoNumber;
 	}
 }
